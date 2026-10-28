@@ -1,0 +1,19 @@
+# Credenciais e configurações locais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Arquivos locais do sistema e do editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.log
+*.tmp
+
+# Ajustar dependências e artefatos de compilação após definir a tecnologia.
