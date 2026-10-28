@@ -35,7 +35,9 @@ O resultado de cada execução está no GitHub Actions. Os testes de interface u
 
 ### Evidência registrada em 28 de outubro de 2026
 
-No commit `59b802c57e7e29d57b6300a4a2a67efbddc077d4`, a [execução em macOS](https://github.com/marcusalveseng-ops/app-devocional-plano-de-vida/actions/runs/40634048669) aprovou a geração do projeto, a suíte de 28 testes do núcleo e a compilação para simulador. A execução de interface ainda estava em andamento no momento deste registro e não está certificada por esse resultado parcial.
+No commit `c7a4339`, a [execução em macOS](https://github.com/marcusalveseng-ops/app-devocional-plano-de-vida/actions/runs/40635015222) terminou com sucesso: geração do projeto, 28 testes do núcleo, compilação para simulador e 2 testes de interface. No iPhone 16 Pro simulado, foram verificados criação de momento e prática, exame sem respostas escritas, conclusão manual e anotação preservada após reinício. Os logs registram zero falhas nas duas suítes.
+
+As capturas do primeiro uso, Hoje, Meu plano, Ajustes e reflexão foram inspecionadas. Os artefatos do workflow contêm as evidências. O teste de persistência compara o conteúdo efetivamente presente no editor com o exibido depois de salvar e reiniciar, evitando confundir alterações do teclado do simulador com perda de dados.
 
 A validação local também conferiu os links relativos da documentação, as exclusões representativas do `.gitignore` e os arquivos versionados quanto a padrões comuns de credenciais, sem encontrar correspondências. Essa conferência não substitui a revisão de futuros arquivos antes de cada commit.
 
