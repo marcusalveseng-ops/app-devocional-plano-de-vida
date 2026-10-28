@@ -13,6 +13,7 @@ struct PlanoDeVidaApp: App {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in model.foreground() }
                 .onReceive(NotificationCenter.default.publisher(for: .NSSystemTimeZoneDidChange)) { _ in model.foreground() }
+                .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in model.foreground() }
         }
     }
 }

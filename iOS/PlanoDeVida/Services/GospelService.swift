@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import DevotionalCore
 
 @MainActor
@@ -22,6 +23,7 @@ final class GospelService: ObservableObject {
                 cacheAllowed: info["GospelCacheAllowed"] as? Bool ?? false))
         } else { client = GospelClient(configuration: nil) }
         cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("gospel-authorized.json")
+        if client.configuration?.cacheAllowed != true { try? FileManager.default.removeItem(at: cacheURL) }
     }
     func load(day: String) async {
         let token = UUID(); generation = token; loading = true; content = nil; message = nil; usingCache = false

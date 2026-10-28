@@ -15,6 +15,7 @@ final class PlanoDeVidaUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons["Hoje"].waitForExistence(timeout: 5))
         capture("02-hoje")
         openExamination()
+        scrollTo(app.buttons["Refletir em silêncio"])
         app.buttons["Refletir em silêncio"].tap()
         XCTAssertTrue(app.staticTexts["Pergunta 1 de 3"].waitForExistence(timeout: 3))
         app.buttons["Próxima pergunta"].tap()
@@ -47,7 +48,9 @@ final class PlanoDeVidaUITests: XCTestCase {
         app.buttons["Novo momento do dia"].tap()
         let field = app.textFields["moment-name"]; XCTAssertTrue(field.waitForExistence(timeout: 3))
         field.tap(); field.typeText("Após o trabalho"); app.buttons["Salvar"].tap()
-        let add = app.buttons["Adicionar prática"].lastMatch
+        let addButtons = app.buttons.matching(identifier: "Adicionar prática")
+        XCTAssertGreaterThan(addButtons.count, 0)
+        let add = addButtons.element(boundBy: addButtons.count - 1)
         scrollTo(add); add.tap()
         let visit = app.buttons["Visita a enfermos"]
         scrollTo(visit); visit.tap()

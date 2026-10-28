@@ -36,10 +36,12 @@ final class AppModel: ObservableObject {
     func commit(requestNotificationPermission: Bool = false, _ change: (inout PlanState) throws -> Void) -> Bool {
         guard !loadFailed else { return false }
         do {
-            var next = state; try change(&next); try repository.save(next)
+            var next = state; try change(&next)
+            if let timer = next.timer, next.activity(timer.activityID)?.isEnabled != true { next.timer = nil }
+            try repository.save(next)
             let scheduleChanged = ReminderPlanner.build(state).requests != ReminderPlanner.build(next).requests || state.timer != next.timer
             state = next
-            if let id = audio.activityID, state.activity(id) == nil { audio.stop() }
+            if let id = audio.activityID, state.activity(id)?.isEnabled != true { audio.stop() }
             if scheduleChanged || requestNotificationPermission { Task {
                 if requestNotificationPermission { await notifications.requestPermission() }
                 await notifications.synchronize(state)
@@ -55,7 +57,7 @@ final class AppModel: ObservableObject {
         }
     }
     func foreground() {
-        privacyShield = false
+        privacyShield = UIApplication.shared.applicationState != .active
         today = LocalDay.string()
         Task { await notifications.synchronize(state) }
     }
