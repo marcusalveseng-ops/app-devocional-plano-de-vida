@@ -21,7 +21,7 @@ struct ExaminationView: View {
                 Text("Se desejar, registre abaixo uma reflexão ou um propósito. Você pode concluir sem escrever.").foregroundStyle(.secondary)
                 Button("Voltar ao roteiro") { manualSession = false; manualFinished = false; manualIndex = 0; if hasAudio { player.stop() } }.buttonStyle(.bordered)
             } else if hasAudio || manualSession {
-                let index = hasAudio ? min(player.index, questions.count - 1) : manualIndex
+                let index = min(hasAudio ? player.index : manualIndex, questions.count - 1)
                 Text("Pergunta \(index + 1) de \(questions.count)").font(.caption.weight(.medium)).foregroundStyle(Palette.forest)
                 Text(hasAudio ? player.currentText : questions[index].text).font(.system(.title2, design: .serif)).lineSpacing(7)
                     .frame(maxWidth: .infinity, minHeight: 160, alignment: .leading)
@@ -64,6 +64,10 @@ struct ExaminationView: View {
                 Text("Pausa de \(model.state.preferences.pauseSeconds) segundos após cada pergunta do áudio. A voz e as pausas podem ser alteradas em Ajustes.").font(.footnote).foregroundStyle(.secondary)
             }
         }.padding(22).frame(maxWidth: .infinity, alignment: .leading).background(Palette.card, in: RoundedRectangle(cornerRadius: 22))
+            .onChange(of: questions) { _, _ in
+                manualSession = false; manualFinished = false; manualIndex = 0
+                if hasAudio { player.stop() }
+            }
             .alert("Áudio indisponível", isPresented: Binding(get: { player.errorMessage != nil }, set: { if !$0 { player.errorMessage = nil } })) {
                 Button("Entendi") { player.errorMessage = nil }
             } message: { Text(player.errorMessage ?? "") }

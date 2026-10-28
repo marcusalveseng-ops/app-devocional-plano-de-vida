@@ -69,6 +69,7 @@ def configs(name, settings):
         values["SWIFT_OPTIMIZATION_LEVEL"] = "-Onone" if mode == "Debug" else "-O"
         values["SWIFT_ACTIVE_COMPILATION_CONDITIONS"] = "$(inherited) DEBUG" if mode == "Debug" else "$(inherited)"
         values["DEBUG_INFORMATION_FORMAT"] = "dwarf" if mode == "Debug" else "dwarf-with-dsym"
+        values["ONLY_ACTIVE_ARCH"] = "YES" if mode == "Debug" else "NO"
         if mode == "Debug": values["ENABLE_TESTABILITY"] = "YES"
         configs.append(obj(name+mode, "XCBuildConfiguration", buildSettings=values, name=mode))
     return obj(name+"configs", "XCConfigurationList", buildConfigurations=configs, defaultConfigurationIsVisible=0, defaultConfigurationName="Release")
