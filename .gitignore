@@ -6,6 +6,16 @@
 *.key
 *.p12
 *.pfx
+*.jks
+*.keystore
+.secrets/
+.credentials/
+credentials.json
+credentials.*.json
+service-account*.json
+service_account*.json
+id_rsa
+id_ed25519
 
 # Arquivos locais do sistema e do editor
 .DS_Store
@@ -17,3 +27,17 @@ Desktop.ini
 *.tmp
 
 # Ajustar dependências e artefatos de compilação após definir a tecnologia.
+# Swift Package Manager e dependências iOS
+.build/
+Pods/
+Carthage/Build/
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+.swiftpm/
+artifacts/
+*.temp
+*.swp
+*.swo
+*~
