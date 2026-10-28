@@ -31,14 +31,20 @@ final class PlanoDeVidaUITests: XCTestCase {
         app.buttons["Nova anotação"].tap()
         let editor = app.textViews["note-text"]
         XCTAssertTrue(editor.waitForExistence(timeout: 3)); editor.tap(); editor.typeText("Nota de teste de persistência")
+        // Compare persistence with the text actually entered by the simulator keyboard.
+        let enteredText = editor.value as? String ?? ""
+        XCTAssertTrue(enteredText.contains("persist"))
         app.buttons["save-note"].tap()
+        scrollTo(app.staticTexts[enteredText])
+        XCTAssertTrue(app.staticTexts[enteredText].exists)
         capture("03-reflexao-concluida")
         app.terminate()
         app.launchArguments = ["-ui-testing"]
         app.launch()
         openExamination()
-        scrollTo(app.staticTexts["Nota de teste de persistência"])
-        XCTAssertTrue(app.staticTexts["Nota de teste de persistência"].exists)
+        scrollTo(app.staticTexts[enteredText])
+        XCTAssertTrue(app.staticTexts[enteredText].exists)
+        capture("06-anotacao-preservada")
     }
     func testCreateMomentAndFreeActivity() {
         app.buttons["onboard-template"].tap()
